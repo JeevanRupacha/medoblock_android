@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Medo Block</string>
     <string name="send">Send</string>
-    <string name="enter_query">Enter your query...</string>
+    <string name="enter_query">Enter your question here...</string>
 </resources>

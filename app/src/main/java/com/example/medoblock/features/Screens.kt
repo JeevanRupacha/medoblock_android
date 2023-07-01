@@ -5,7 +5,7 @@ sealed class Screens (
     val name: String
 ){
     object MainScreen: Screens("main-screen", "Home")
-    object SupplyChainDetails: Screens("supply-chain-details", "Supply Chain")
+    object SupplyChainDetails: Screens("supply-chain-details", "Supply chain")
     object Medicines: Screens("medicines", "Medicines")
     object Chat: Screens("chat", "Chat")
 

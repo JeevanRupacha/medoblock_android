@@ -5,16 +5,26 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.medoblock.core.utils.LoadingState
 import com.example.medoblock.domain.models.Message
+import com.example.medoblock.domain.repository.ApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ChatViewModel @Inject constructor(): ViewModel() {
+class ChatViewModel @Inject constructor(
+    private val apiRepository: ApiRepository
+): ViewModel() {
 
     var messages by mutableStateOf<List<Message>>(emptyList())
         private set
+
+    private val _responseLoading = MutableStateFlow(LoadingState.IDLE)
+    val responseLoading = _responseLoading.asStateFlow()
 
     init {
         addMessage()
@@ -59,10 +69,23 @@ class ChatViewModel @Inject constructor(): ViewModel() {
         messages = mutableMsg
     }
 
-    fun addUserMessage(message: String){
+    fun addUserMessage(message: String) = viewModelScope.launch{
         val newMsg = Message(message,System.currentTimeMillis(), false)
         val mutableMsg = messages.toMutableList()
         mutableMsg.add(newMsg)
         messages = mutableMsg
+
+        _responseLoading.emit(LoadingState.LOADING)
+        try {
+            val response = apiRepository.sendChatQuery(message).trim()
+            val newResMsg = Message(response,System.currentTimeMillis(), true)
+            val mutableResMsg = messages.toMutableList()
+            mutableResMsg.add(newResMsg)
+            messages = mutableResMsg
+            _responseLoading.emit(LoadingState.LOADED)
+        }catch (e: Exception){
+            _responseLoading.emit(LoadingState.ERROR)
+            e.printStackTrace()
+        }
     }
 }

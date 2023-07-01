@@ -28,6 +28,7 @@ import com.example.medoblock.R
 import com.example.medoblock.domain.models.Message
 import com.example.medoblock.features.shared.utils.MDateTime
 import com.example.medoblock.features.ui.theme.MedoBlockTheme
+import com.example.medoblock.features.ui.theme.bodyOSmall
 
 @Composable
 fun BotMessage(
@@ -72,7 +73,7 @@ fun BotMessage(
                 ){
                     Text(
                         text = message.message ?: "",
-                        style = MaterialTheme.typography.titleSmall
+                        style = MaterialTheme.typography.bodyOSmall
                     )
                 }
 
@@ -86,7 +87,7 @@ fun BotMessage(
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(4.dp))
             }
         }
     }

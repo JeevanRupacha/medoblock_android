@@ -1,6 +1,5 @@
 package com.example.medoblock.domain.network
 
-import com.example.medoblock.domain.models.SupplyChain
 import retrofit2.http.GET
 import retrofit2.http.Path
 

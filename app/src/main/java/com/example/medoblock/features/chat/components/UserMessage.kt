@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import com.example.medoblock.domain.models.Message
 import com.example.medoblock.features.shared.utils.MDateTime
 import com.example.medoblock.features.ui.theme.MedoBlockTheme
+import com.example.medoblock.features.ui.theme.bodyOSmall
+import com.example.medoblock.features.ui.theme.chatGreen
 
 @Composable
 fun UserMessage(
@@ -48,12 +50,13 @@ fun UserMessage(
                                 topStart = 20.dp
                             )
                         )
-                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                        .background(chatGreen)
                         .padding(12.dp)
                 ){
                     Text(
                         text = message.message ?: "",
-                        style = MaterialTheme.typography.titleSmall
+                        style = MaterialTheme.typography.bodyOSmall,
+                        color = MaterialTheme.colorScheme.onSecondary
                     )
                 }
 
@@ -67,7 +70,7 @@ fun UserMessage(
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(4.dp))
             }
         }
     }

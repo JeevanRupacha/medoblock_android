@@ -1,36 +1,45 @@
 package com.example.medoblock.core.components
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.medoblock.features.ui.theme.gray1
 
 @Composable
 fun TimelineDottedBoth(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isStart: Boolean,
+    isEnd: Boolean,
+    dottedColor: Color = gray1,
+    circleColor: Color = MaterialTheme.colorScheme.primary
 ) {
     Box(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxHeight().width(40.dp)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(.5f)
-                .height(20.dp)
-                .align(Alignment.TopCenter)
-                .padding(end = 20.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            DottedLine(
-                arcStrokeColor = gray1,
-                vertical = true
-            )
+        if(!isStart){
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight(.5f)
+                    .align(Alignment.TopCenter)
+                    .padding(bottom = 16.dp)
+                ,
+                contentAlignment = Alignment.Center
+            ) {
+                DottedLine(
+                    vertical = true,
+                    arcStrokeColor = dottedColor
+                )
+            }
         }
 
         Box(
@@ -39,23 +48,25 @@ fun TimelineDottedBoth(
                 .align(Alignment.Center)
         ) {
             DotCircleArcCanvas(
-                arcStrokeColor = gray1,
-                circleColor = MaterialTheme.colorScheme.primary
+                arcStrokeColor = dottedColor,
+                circleColor = circleColor
             )
         }
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(.5f)
-                .height(20.dp)
-                .align(Alignment.BottomCenter)
-                .padding(start = 20.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            DottedLine(
-                arcStrokeColor = gray1,
-                vertical = true
-            )
+        if(!isEnd){
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight(.5f)
+                    .align(Alignment.BottomCenter)
+                    .padding(top = 16.dp)
+                ,
+                contentAlignment = Alignment.Center
+            ) {
+                DottedLine(
+                    arcStrokeColor = dottedColor,
+                    vertical = true
+                )
+            }
         }
     }
 }

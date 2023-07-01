@@ -16,21 +16,23 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,6 +42,19 @@ import com.example.medoblock.core.utils.LoadingState
 import com.example.medoblock.features.Screens
 import com.example.medoblock.features.shared.components.MTopAppBar
 import com.example.medoblock.features.shared.utils.LocalDimension
+import com.example.medoblock.features.supplyChainDetails.components.CreateMedicine
+import com.example.medoblock.features.supplyChainDetails.components.FdaAccept
+import com.example.medoblock.features.supplyChainDetails.components.FdaReq
+import com.example.medoblock.features.supplyChainDetails.components.RawMatAccept
+import com.example.medoblock.features.supplyChainDetails.components.RawMatRequest
+import com.example.medoblock.features.supplyChainDetails.components.SellMedicine
+import com.example.medoblock.features.supplyChainDetails.components.TransCompleted
+import com.example.medoblock.features.supplyChainDetails.components.TransMedCompleted
+import com.example.medoblock.features.supplyChainDetails.components.TransOnWay
+import com.example.medoblock.features.supplyChainDetails.components.TransReq
+import com.example.medoblock.features.supplyChainDetails.components.TransReqAccept
+import com.example.medoblock.features.supplyChainDetails.components.TransReqMed
+import com.example.medoblock.features.supplyChainDetails.components.TransportInit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,7 +71,8 @@ fun SupplyChainDetailsScreen(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
-    var openCamera by rememberSaveable { mutableStateOf(true) }
+    var openCamera by rememberSaveable { mutableStateOf(false) }
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     var hasCamPermission by remember {
         mutableStateOf(
@@ -78,11 +94,17 @@ fun SupplyChainDetailsScreen(
         launcher.launch(Manifest.permission.CAMERA)
     }
 
+    LaunchedEffect(key1 = Unit){
+        viewModel.getSupplyChain("sdg")
+    }
+
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             MTopAppBar(
                 title = Screens.SupplyChainDetails.name,
-                onBack = { navController.navigateUp() }
+                onBack = { navController.navigateUp() },
+                scrollBehavior = scrollBehavior
             )
         },
     ) { paddingValues ->
@@ -92,7 +114,8 @@ fun SupplyChainDetailsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = containerXPadding)
+                    .verticalScroll(rememberScrollState())
+                    .padding(start = containerXPadding - 8.dp, end = containerXPadding)
             ) {
 
                 Spacer(modifier = Modifier.height(topPadding))
@@ -141,18 +164,28 @@ fun SupplyChainDetailsScreen(
                 }
 
                 if(!openCamera){
-                    Text(
-                        text = code,
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.fillMaxWidth(),
-                        color = Color.Red
-                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    RawMatRequest(rawMatRequest = state.supplyChain?.rawMatRequest)
+                    RawMatAccept(rawMatAccept = state.supplyChain?.rawMatAccept)
+                    TransReq(transReq = state.supplyChain?.transReq)
+                    TransReqAccept(transReqAccept = state.supplyChain?.transReqAccept)
+                    TransportInit(data = state.supplyChain?.transportInit)
+                    TransOnWay(data = state.supplyChain?.transOnWay)
+                    TransCompleted(data = state.supplyChain?.transCompleted)
+                    CreateMedicine(data = state.supplyChain?.createMedicne)
+                    FdaReq(data = state.supplyChain?.fdaReq)
+                    FdaAccept(data = state.supplyChain?.fdaAccept)
+                    TransReqMed(data = state.supplyChain?.transReqMed)
+                    TransMedCompleted(data = state.supplyChain?.transMedCompleted)
+                    SellMedicine(data = state.supplyChain?.sellMedicine)
                 }
             }
 
             if(isLoading == LoadingState.LOADING){
                 Box(
-                    modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.background),
                     contentAlignment = Alignment.Center
                 ){
                     CircularProgressIndicator()
