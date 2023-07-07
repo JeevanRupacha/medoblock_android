@@ -89,6 +89,7 @@ fun ChatScreen(
                 easing = FastOutSlowInEasing
             )
         )
+        if(messages.isEmpty()) viewModel.addMessage()
     }
 
     LaunchedEffect(key1 = messages){
@@ -121,6 +122,7 @@ fun ChatScreen(
             ) {
                 Spacer(modifier = Modifier.height(topPadding + containerTopPadding))
                 Spacer(modifier = Modifier.height(16.dp))
+
 
                 messages.forEachIndexed { index, message ->
                     if(message.isChatBot){
@@ -155,7 +157,9 @@ fun ChatScreen(
                 }
 
                 LoadingMsgGif(isLoading = isLoading == LoadingState.LOADING)
-                Spacer(modifier = Modifier.height(70.dp))
+                if(messages.isNotEmpty()){
+                    Spacer(modifier = Modifier.height(70.dp))
+                }
             }
 
             val dpKeyboardOffset = with(LocalDensity.current) { keyboardOffset.toDp() }

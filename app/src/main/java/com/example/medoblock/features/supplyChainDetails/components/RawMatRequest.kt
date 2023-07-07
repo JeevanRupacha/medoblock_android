@@ -1,6 +1,5 @@
 package com.example.medoblock.features.supplyChainDetails.components
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import com.example.medoblock.R
 import com.example.medoblock.features.shared.utils.trimAddress
 import com.example.medoblock.features.ui.theme.bodyOMedium
-import com.example.medoblock.features.ui.theme.grayTextColor
 
 @Composable
 fun RawMatRequest(
@@ -50,57 +48,59 @@ fun RawMatRequest(
                     contentDescription = null
                 )
 
-                Spacer(modifier = Modifier.padding(end = 8.dp))
+                if(isActive){
+                    Spacer(modifier = Modifier.padding(end = 8.dp))
 
-                Column(modifier = Modifier.padding(vertical = 8.dp)) {
-                    Text(
-                        text = "Raw material request",
-                        style = MaterialTheme.typography.bodyOMedium,
-                        fontWeight = FontWeight.W600,
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
+                    Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                        Text(
+                            text = "Raw material request",
+                            style = MaterialTheme.typography.bodyOMedium,
+                            fontWeight = FontWeight.W600,
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = name ?: "",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = name ?: "",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = date ?: "",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = date ?: "",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = "count : "  + (count ?. split (":")?.get(1) ?: ""),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = "count : "  + (count ?. split (":")?.get(1) ?: ""),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = "Id : "  + trimAddress(rawMatId?.split (":")?.get(1) ?: ""),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = "Id : "  + trimAddress(rawMatId?.split (":")?.get(1) ?: ""),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = "from : "  + trimAddress(requesterId?.split (":")?.get(1) ?: ""),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = "from : "  + trimAddress(requesterId?.split (":")?.get(1) ?: ""),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = "to : "  + trimAddress(requestedToId?.split (":")?.get(1) ?: ""),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = "to : "  + trimAddress(requestedToId?.split (":")?.get(1) ?: ""),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
+                    }
                 }
             }
         }

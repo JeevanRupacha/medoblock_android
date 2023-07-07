@@ -54,57 +54,59 @@ fun RawMatAccept(
                     contentDescription = null
                 )
 
-                Spacer(modifier = Modifier.padding(end = 8.dp))
+                if(isActive){
+                    Spacer(modifier = Modifier.padding(end = 8.dp))
 
-                Column(modifier = Modifier.padding(vertical = 8.dp)) {
-                    Text(
-                        text = "Raw material accepted",
-                        style = MaterialTheme.typography.bodyOMedium,
-                        fontWeight = FontWeight.W600,
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
+                    Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                        Text(
+                            text = "Raw material accepted",
+                            style = MaterialTheme.typography.bodyOMedium,
+                            fontWeight = FontWeight.W600,
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = "Status : "  + (status ?. split (":")?.get(1) ?: ""),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = orange1
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = "Status : "  + (status ?. split (":")?.get(1) ?: ""),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = orange1
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = name ?: "",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = name ?: "",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = date ?: "",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = date ?: "",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = "Id : "  + trimAddress(rawMatId?.split (":")?.get(1) ?: ""),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = "Id : "  + trimAddress(rawMatId?.split (":")?.get(1) ?: ""),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = "from : "  + trimAddress(requesterId?.split (":")?.get(1) ?: ""),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = "from : "  + trimAddress(requesterId?.split (":")?.get(1) ?: ""),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = "to : "  + trimAddress(requestedToId?.split (":")?.get(1) ?: ""),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = "to : "  + trimAddress(requestedToId?.split (":")?.get(1) ?: ""),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
+                    }
                 }
             }
         }

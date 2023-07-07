@@ -1,5 +1,6 @@
 package com.example.medoblock.features.chat
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,11 +9,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.medoblock.core.utils.LoadingState
 import com.example.medoblock.domain.models.Message
 import com.example.medoblock.domain.repository.ApiRepository
+import com.example.medoblock.features.shared.utils.MDateTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,11 +29,18 @@ class ChatViewModel @Inject constructor(
     private val _responseLoading = MutableStateFlow(LoadingState.IDLE)
     val responseLoading = _responseLoading.asStateFlow()
 
-    init {
-        addMessage()
-    }
 
-    fun addMessage() = viewModelScope.launch {
+     fun addMessage()  = viewModelScope.launch{
+        _responseLoading.emit(LoadingState.LOADING)
+        runBlocking {
+            delay(100)
+        }
+
+        Log.d("TAG", "addMessage: ${responseLoading.value}")
+        _responseLoading.emit(LoadingState.LOADED)
+
+        val botWelMsg1 = Message("Welcome to MedoBlock 🙌", System.currentTimeMillis(), true)
+        val botWelMsg2 = Message("How can I help you?", System.currentTimeMillis(), true)
         val newMessage = Message("How are you?", 1687368328, false)
         val newMessage2 = Message("How can a medicine help to cure illness ?", 1687368328, false)
         val newMessage3 = Message("How can a  to cure illness ?", 1687368328, false)
@@ -43,28 +53,28 @@ class ChatViewModel @Inject constructor(
         val botMsg5 = Message("Happy to help?", 1687368328, true)
 
         val mutableMsg = messages.toMutableList()
-        mutableMsg.add(botMsg1)
-        mutableMsg.add(newMessage)
-        mutableMsg.add(newMessage2)
-        mutableMsg.add(botMsg2)
-        mutableMsg.add(botMsg3)
-        mutableMsg.add(newMessage3)
-        mutableMsg.add(botMsg4)
-        mutableMsg.add(newMessage4)
-        mutableMsg.add(newMessage5)
-        mutableMsg.add(botMsg5)
-
-
-        mutableMsg.add(botMsg1)
-        mutableMsg.add(newMessage)
-        mutableMsg.add(newMessage2)
-        mutableMsg.add(botMsg2)
-        mutableMsg.add(botMsg3)
-        mutableMsg.add(newMessage3)
-        mutableMsg.add(botMsg4)
-        mutableMsg.add(newMessage4)
-        mutableMsg.add(newMessage5)
-        mutableMsg.add(botMsg5)
+        mutableMsg.add(botWelMsg1)
+        mutableMsg.add(botWelMsg2)
+//        mutableMsg.add(newMessage2)
+//        mutableMsg.add(botMsg2)
+//        mutableMsg.add(botMsg3)
+//        mutableMsg.add(newMessage3)
+//        mutableMsg.add(botMsg4)
+//        mutableMsg.add(newMessage4)
+//        mutableMsg.add(newMessage5)
+//        mutableMsg.add(botMsg5)
+//
+//
+//        mutableMsg.add(botMsg1)
+//        mutableMsg.add(newMessage)
+//        mutableMsg.add(newMessage2)
+//        mutableMsg.add(botMsg2)
+//        mutableMsg.add(botMsg3)
+//        mutableMsg.add(newMessage3)
+//        mutableMsg.add(botMsg4)
+//        mutableMsg.add(newMessage4)
+//        mutableMsg.add(newMessage5)
+//        mutableMsg.add(botMsg5)
 
         messages = mutableMsg
     }

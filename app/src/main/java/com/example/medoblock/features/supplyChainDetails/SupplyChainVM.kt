@@ -34,6 +34,9 @@ class SupplyChainVM @Inject constructor(
         if(_state.value.loading == LoadingState.LOADING) return@launch
         try {
             _state.emit(_state.value.copy(loading = LoadingState.LOADING))
+//            val result = apiRepository.getSupplyChain(address)
+            //0x3b967767da97Fa2314De8282B0C0F4E308209E95
+//            val result = apiRepository.getSupplyChain("flgjlfkgfdjglkdflkgdkfg")
             val result = apiRepository.getSupplyChain("0xE74ECDB1BbAAFE1dd21696832dD49B5536e00AbC")
             _state.emit(_state.value.copy(loading = LoadingState.LOADED, supplyChain = result))
             Log.d(TAG, "getSupplyChain: $result")

@@ -37,7 +37,7 @@ fun TransportInit(
     val toLoc = splitVal?.get(12)
     val date = MDateTime.timestampToDate(splitVal?.get(1)?.split(":")?.get(1)?.toLong())
     val status = splitVal?.get(9)
-    val cost = splitVal?.get(10)
+    val cost = splitVal?.get(10)?.split(":")?.get(1)
 
     val isActive = remember(data){ !data.isNullOrEmpty()}
 
@@ -57,79 +57,81 @@ fun TransportInit(
                     contentDescription = null
                 )
 
-                Spacer(modifier = Modifier.padding(end = 8.dp))
+                if(isActive){
+                    Spacer(modifier = Modifier.padding(end = 8.dp))
 
-                Column(modifier = Modifier.padding(vertical = 8.dp)) {
-                    Text(
-                        text = "Transport Initialized",
-                        style = MaterialTheme.typography.bodyOMedium,
-                        fontWeight = FontWeight.W600,
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
+                    Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                        Text(
+                            text = "Transport Initialized",
+                            style = MaterialTheme.typography.bodyOMedium,
+                            fontWeight = FontWeight.W600,
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = trimAddress(id?.split (":")?.get(1) ?: ""),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = orange1
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = trimAddress(id?.split (":")?.get(1) ?: ""),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = orange1
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = (status ?. split (":")?.get(1) ?: ""),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = orange1
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = (status ?. split (":")?.get(1) ?: ""),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = orange1
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text =  "from Location: ${fromLoc?.split(":")?.get(1)}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text =  "from Location: ${fromLoc?.split(":")?.get(1)}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    val tol = toLoc?.split(":")
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text =  "to Location: ${if((tol?.size ?: 0) > 1) tol?.get(1) else ""}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        val tol = toLoc?.split(":")
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text =  "to Location: ${if((tol?.size ?: 0) > 1) tol?.get(1) else ""}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text =  cost ?: "",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = "Cost $" + (cost ?: ""),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = date ?: "",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = date ?: "",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = "Id : "  + trimAddress(rawMatId?.split (":")?.get(1) ?: ""),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = "Id : "  + trimAddress(rawMatId?.split (":")?.get(1) ?: ""),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = "from : "  + trimAddress(requesterId?.split (":")?.get(1) ?: ""),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = "from : "  + trimAddress(requesterId?.split (":")?.get(1) ?: ""),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = "to : "  + trimAddress(requestedToId?.split (":")?.get(1) ?: ""),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = "to : "  + trimAddress(requestedToId?.split (":")?.get(1) ?: ""),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
+                    }
                 }
             }
         }
